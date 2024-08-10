@@ -1,10 +1,7 @@
 import * as fs from "node:fs/promises";
-import * as url from "url";
 import * as path from "node:path";
 
-const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
-
-const contactsPath = path.join(__dirname, "db", "contacts.json");
+const contactsPath = path.resolve("db", "contacts.json");
 
 async function listContacts() {
   const contacts = await fs.readFile(contactsPath, "utf8");
@@ -17,7 +14,7 @@ async function getContactById(contactId) {
   return contact || null;
 }
 
-async function addContact(name, email, phone) {
+async function addContact({ name, email, phone }) {
   const contacts = await listContacts();
   const newContact = {
     id: String(Date.now()),
@@ -28,6 +25,17 @@ async function addContact(name, email, phone) {
   contacts.push(newContact);
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
   return newContact;
+}
+
+async function updateContact(contactId, data) {
+  const contacts = await listContacts();
+  const index = contacts.findIndex((contact) => contact.id === contactId);
+  if (index === -1) {
+    return null;
+  }
+  contacts[index] = { ...contacts[index], ...data };
+  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+  return contacts[index];
 }
 
 async function removeContact(contactId) {
@@ -41,4 +49,10 @@ async function removeContact(contactId) {
   return null;
 }
 
-export { listContacts, getContactById, removeContact, addContact };
+export {
+  listContacts,
+  getContactById,
+  addContact,
+  updateContact,
+  removeContact,
+};
