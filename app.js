@@ -4,7 +4,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import contactsRouter from "./routes/contactRouter.js";
-import { DB_HOST } from "./config.js";
 
 const app = express();
 
@@ -22,6 +21,9 @@ app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
 });
+
+const DB_HOST =
+  "mongodb+srv://lierrastern:HALASliFOw8LjhBx@cluster0.2faxl.mongodb.net/contacts?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose
   .connect(DB_HOST)
