@@ -23,7 +23,7 @@ app.use((err, req, res, next) => {
 });
 
 const DB_HOST =
-  "mongodb+srv://lierrastern:HALASliFOw8LjhBx@cluster0.2faxl.mongodb.net/contacts?retryWrites=true&w=majority&appName=Cluster0";
+  "mongodb+srv://lierrastern:HALASliFOw8LjhBx@cluster0.2faxl.mongodb.net/db-contacts?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose
   .connect(DB_HOST)

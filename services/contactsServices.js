@@ -1,12 +1,11 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
+import Contact from "../models/Contact.js";
+
 const contactsPath = path.resolve("db", "contacts.json");
 
-async function listContacts() {
-  const contacts = await fs.readFile(contactsPath, "utf8");
-  return JSON.parse(contacts);
-}
+const listContacts = () => Contact.find();
 
 async function getContactById(contactId) {
   const contacts = await listContacts();
