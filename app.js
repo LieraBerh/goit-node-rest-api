@@ -28,7 +28,7 @@ const DB_HOST =
 mongoose
   .connect(DB_HOST)
   .then(() => {
-    console.log("Database connect success");
+    console.log("Database connection successful");
 
     app.listen(3000, () => {
       console.log("Server is running. Use our API on port: 3000");

@@ -73,3 +73,23 @@ export const deleteContact = async (req, res, next) => {
     next(error);
   }
 };
+
+export const favoriteContact = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { favorite } = req.body;
+
+    if (typeof favorite !== "boolean") {
+      throw HttpError(400, "Missing field favorite or invalid type");
+    }
+
+    const result = await contactsService.updateStatusContact(id, { favorite });
+    if (!result) {
+      throw HttpError(404, `Contact with id ${id} not found`);
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
