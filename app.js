@@ -22,13 +22,10 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-const DB_HOST =
-  "mongodb+srv://lierrastern:HALASliFOw8LjhBx@cluster0.2faxl.mongodb.net/db-contacts?retryWrites=true&w=majority&appName=Cluster0";
-
 mongoose
-  .connect(DB_HOST)
+  .connect(process.env.DB_HOST)
   .then(() => {
-    console.log("Database connection successful");
+    console.log("Database connection successful ");
 
     app.listen(3000, () => {
       console.log("Server is running. Use our API on port: 3000");
