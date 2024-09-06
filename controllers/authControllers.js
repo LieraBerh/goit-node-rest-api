@@ -11,6 +11,15 @@ const signup = async (req, res) => {
   });
 };
 
+const signin = async (req, res) => {
+  const { token } = await authServices.signin(req.body);
+
+  res.json({
+    token,
+  });
+};
+
 export default {
   signup: ctrlWrapper(signup),
+  signin: ctrlWrapper(signin),
 };

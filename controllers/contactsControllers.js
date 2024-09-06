@@ -2,8 +2,9 @@ import * as contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
-const getAllContacts = async (_, res) => {
-  const result = await contactsService.listContacts();
+const getAllContacts = async (req, res) => {
+  const { _id: owner } = req.user;
+  const result = await contactsService.listContacts({ owner });
   res.status(200).json(result);
 };
 
@@ -17,7 +18,8 @@ const getOneContact = async (req, res) => {
 };
 
 const createContact = async (req, res) => {
-  const result = await contactsService.addContact(req.body);
+  const { _id: owner } = req.user;
+  const result = await contactsService.addContact({ ...req.body, owner });
   res.status(201).json(result);
 };
 
